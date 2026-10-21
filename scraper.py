@@ -7,8 +7,11 @@ with sync_playwright() as p:
 
     page.goto(
         "https://uae.dubizzle.com/motors/new-cars/mercedes-benz/",
-        wait_until="networkidle"
+        wait_until="domcontentloaded",
+        timeout=60000
     )
+
+    page.wait_for_timeout(10000)
 
     content = page.content()
 
@@ -20,5 +23,7 @@ with sync_playwright() as p:
         print("SUCCESS")
     else:
         print("UNKNOWN_RESPONSE")
+
+    print(content[:5000])
 
     browser.close()
